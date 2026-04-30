@@ -1,0 +1,10 @@
+*.pyc
+*.pyo
+__pycache__/
+*.log
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+**/.streamlit/secrets.toml
