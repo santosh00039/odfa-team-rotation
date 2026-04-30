@@ -693,8 +693,24 @@ def match_history_page() -> None:
 
 
 def main() -> None:
-    require_approved_coach()
-    init_db()
+    try:
+        require_approved_coach()
+    except Exception as error:
+        st.error("Sign-in setup failed.")
+        st.info("Check Streamlit Cloud logs and confirm the Google OIDC secrets are correct.")
+        st.caption(f"{type(error).__name__}: {error}")
+        st.stop()
+
+    try:
+        init_db()
+    except Exception as error:
+        st.error("Database connection failed.")
+        st.info(
+            "Check the [database].url value in Streamlit Cloud secrets and confirm "
+            "the Supabase database is reachable."
+        )
+        st.caption(f"{type(error).__name__}: {error}")
+        st.stop()
 
     st.sidebar.title("Football Rotation")
     page = st.sidebar.radio(
